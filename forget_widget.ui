@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>300</width>
-    <height>328</height>
+    <width>220</width>
+    <height>260</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -39,113 +39,96 @@ QPushButton#cancel_pushButton:pressed
 	border-image:url(:/pic/pic/button_login_down.png)0 0 0 0 strecth strecth
 }</string>
   </property>
-  <widget class="QPushButton" name="confirm_pushButton">
+  <widget class="QFrame" name="frame">
    <property name="geometry">
     <rect>
-     <x>30</x>
-     <y>270</y>
-     <width>89</width>
-     <height>31</height>
+     <x>0</x>
+     <y>0</y>
+     <width>221</width>
+     <height>261</height>
     </rect>
    </property>
-   <property name="text">
-    <string>确认</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="cancel_pushButton">
-   <property name="geometry">
-    <rect>
-     <x>180</x>
-     <y>270</y>
-     <width>89</width>
-     <height>31</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>取消</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label_5">
-   <property name="geometry">
-    <rect>
-     <x>120</x>
-     <y>20</y>
-     <width>71</width>
-     <height>31</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>13</pointsize>
-    </font>
-   </property>
-   <property name="text">
-    <string>忘记密码</string>
-   </property>
-  </widget>
-  <widget class="QWidget" name="layoutWidget">
-   <property name="geometry">
-    <rect>
-     <x>30</x>
-     <y>70</y>
-     <width>241</width>
-     <height>191</height>
-    </rect>
+   <property name="styleSheet">
+    <string notr="true">QFrame{
+background-color: rgb(121, 121, 121);
+border-radius:20px  ;
+}
+QLineEdit{
+border-radius:6px  ;
+}
+QPushButton{
+background-color: rgb(242, 255, 210);
+background-color: rgb(255, 170, 255);
+font: 290 9pt &quot;Microsoft YaHei UI&quot;;	
+border-radius:3px  ;
+}</string>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
-       <widget class="QLabel" name="label">
-        <property name="text">
-         <string>账号         </string>
+       <widget class="QLineEdit" name="acc_lineEdit">
+        <property name="placeholderText">
+         <string>账号</string>
         </property>
        </widget>
-      </item>
-      <item>
-       <widget class="QLineEdit" name="acc_lineEdit"/>
       </item>
      </layout>
     </item>
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
       <item>
-       <widget class="QLabel" name="label_2">
-        <property name="text">
-         <string>email       </string>
+       <widget class="QLineEdit" name="email_lineEdit">
+        <property name="placeholderText">
+         <string>联系方式</string>
         </property>
        </widget>
-      </item>
-      <item>
-       <widget class="QLineEdit" name="email_lineEdit"/>
       </item>
      </layout>
     </item>
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout_3">
       <item>
-       <widget class="QLabel" name="label_3">
-        <property name="text">
-         <string>新密码     </string>
+       <widget class="QLineEdit" name="pass_lineEdit">
+        <property name="echoMode">
+         <enum>QLineEdit::Password</enum>
+        </property>
+        <property name="placeholderText">
+         <string>新密码</string>
         </property>
        </widget>
-      </item>
-      <item>
-       <widget class="QLineEdit" name="pass_lineEdit"/>
       </item>
      </layout>
     </item>
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout_4">
       <item>
-       <widget class="QLabel" name="label_4">
+       <widget class="QLineEdit" name="pass2_lineEdit">
+        <property name="echoMode">
+         <enum>QLineEdit::Password</enum>
+        </property>
+        <property name="placeholderText">
+         <string>确认密码</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_5">
+      <item>
+       <widget class="QPushButton" name="confirm_pushButton">
         <property name="text">
-         <string>确认密码 </string>
+         <string>确认</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="pass2_lineEdit"/>
+       <widget class="QPushButton" name="cancel_pushButton">
+        <property name="text">
+         <string>取消</string>
+        </property>
+       </widget>
       </item>
      </layout>
     </item>
@@ -153,22 +136,5 @@ QPushButton#cancel_pushButton:pressed
   </widget>
  </widget>
  <resources/>
- <connections>
-  <connection>
-   <sender>cancel_pushButton</sender>
-   <signal>clicked()</signal>
-   <receiver>forget_widget</receiver>
-   <slot>close()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>207</x>
-     <y>240</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>215</x>
-     <y>284</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>
