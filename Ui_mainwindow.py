@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'c:\code\mysql\BookStore\fluent_test.ui'
+# Form implementation generated from reading ui file 'c:\code\mysql\BookStore\mainwindow.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.10
 #
@@ -14,11 +14,11 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(1187, 718)
+        MainWindow.resize(1196, 711)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.frame = QtWidgets.QFrame(self.centralwidget)
-        self.frame.setGeometry(QtCore.QRect(30, 10, 1152, 648))
+        self.frame.setGeometry(QtCore.QRect(10, 0, 1152, 648))
         self.frame.setStyleSheet("/*??*/\n"
 "QWidget\n"
 "{\n"
@@ -227,96 +227,95 @@ class Ui_MainWindow(object):
         self.btn_Close.setText("")
         self.btn_Close.setObjectName("btn_Close")
         self.layoutWidget = QtWidgets.QWidget(self.frame)
-        self.layoutWidget.setGeometry(QtCore.QRect(30, 40, 137, 361))
+        self.layoutWidget.setGeometry(QtCore.QRect(30, 20, 137, 621))
         self.layoutWidget.setObjectName("layoutWidget")
         self.verticalLayout = QtWidgets.QVBoxLayout(self.layoutWidget)
         self.verticalLayout.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout.setObjectName("verticalLayout")
         self.label_8 = QtWidgets.QLabel(self.layoutWidget)
-        self.label_8.setStyleSheet("QLabel\n"
-"{\n"
-"\n"
-"background-color:transparent;\n"
-"\n"
-"color: rgb(255, 170, 255);\n"
-"}\n"
+        self.label_8.setStyleSheet("\n"
 "QLabel::hover{\n"
-"color: rgb(170, 255, 255);\n"
+"    color: rgb(255, 102, 148);\n"
 "}")
         self.label_8.setObjectName("label_8")
         self.verticalLayout.addWidget(self.label_8)
-        self.label_5 = QtWidgets.QLabel(self.layoutWidget)
-        self.label_5.setStyleSheet("QLabel\n"
-"{\n"
-"\n"
-"\n"
-"border-radius:15px;\n"
-"color: rgb(255, 170, 255);\n"
-"}\n"
-"QLabel::hover{\n"
-"    color: rgb(170, 255, 255);\n"
-"}")
-        self.label_5.setObjectName("label_5")
-        self.verticalLayout.addWidget(self.label_5)
         self.label_13 = QtWidgets.QLabel(self.layoutWidget)
-        self.label_13.setStyleSheet("QLabel\n"
-"{\n"
-"\n"
-"\n"
-"border-radius:15px;\n"
-"color: rgb(255, 170, 255);\n"
-"}\n"
+        self.label_13.setStyleSheet("\n"
 "QLabel::hover{\n"
-"    color: rgb(170, 255, 255);\n"
+"    color: rgb(255, 102, 148);\n"
 "}")
         self.label_13.setObjectName("label_13")
         self.verticalLayout.addWidget(self.label_13)
-        self.label_12 = QtWidgets.QLabel(self.layoutWidget)
-        self.label_12.setStyleSheet("QLabel\n"
-"{\n"
-"\n"
-"\n"
-"border-radius:15px;\n"
-"color: rgb(255, 170, 255);\n"
-"}\n"
+        self.label_5 = QtWidgets.QLabel(self.layoutWidget)
+        self.label_5.setStyleSheet("\n"
 "QLabel::hover{\n"
-"    color: rgb(170, 255, 255);\n"
+"    color: rgb(255, 102, 148);\n"
+"}\n"
+"")
+        self.label_5.setObjectName("label_5")
+        self.verticalLayout.addWidget(self.label_5)
+        self.label_12 = QtWidgets.QLabel(self.layoutWidget)
+        self.label_12.setStyleSheet("\n"
+"QLabel::hover{\n"
+"    color: rgb(255, 102, 148);\n"
 "}")
         self.label_12.setObjectName("label_12")
         self.verticalLayout.addWidget(self.label_12)
         self.label_11 = QtWidgets.QLabel(self.layoutWidget)
-        self.label_11.setStyleSheet("QLabel\n"
-"{\n"
-"\n"
-"\n"
-"border-radius:15px;\n"
-"color: rgb(255, 170, 255);\n"
-"}\n"
+        self.label_11.setStyleSheet("\n"
 "QLabel::hover{\n"
-"    color: rgb(170, 255, 255);\n"
+"    color: rgb(255, 102, 148);\n"
 "}")
         self.label_11.setObjectName("label_11")
         self.verticalLayout.addWidget(self.label_11)
         self.label_14 = QtWidgets.QLabel(self.layoutWidget)
-        self.label_14.setStyleSheet("QLabel\n"
-"{\n"
-"\n"
-"border-radius:15px;\n"
-"color: rgb(255, 170, 255);\n"
-"}\n"
+        self.label_14.setStyleSheet("\n"
 "QLabel::hover{\n"
-"    color: rgb(170, 255, 255);\n"
+"    color: rgb(255, 102, 148);\n"
 "}")
+
+
         self.label_14.setObjectName("label_14")
         self.verticalLayout.addWidget(self.label_14)
         self.tableWidget_Admin = QtWidgets.QTableWidget(self.frame)
-        self.tableWidget_Admin.setGeometry(QtCore.QRect(220, 50, 771, 351))
+        self.tableWidget_Admin.setGeometry(QtCore.QRect(180, 80, 901, 551))
+        self.tableWidget_Admin.setStyleSheet("")
         self.tableWidget_Admin.setObjectName("tableWidget_Admin")
         self.tableWidget_Admin.setColumnCount(0)
         self.tableWidget_Admin.setRowCount(0)
+        self.horizontalLayoutWidget = QtWidgets.QWidget(self.frame)
+        self.horizontalLayoutWidget.setGeometry(QtCore.QRect(660, 19, 411, 51))
+        self.horizontalLayoutWidget.setObjectName("horizontalLayoutWidget")
+        self.horizontalLayout = QtWidgets.QHBoxLayout(self.horizontalLayoutWidget)
+        self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout.setObjectName("horizontalLayout")
+        self.pushButton_3 = QtWidgets.QPushButton(self.horizontalLayoutWidget)
+        self.pushButton_3.setObjectName("pushButton_3")
+        self.horizontalLayout.addWidget(self.pushButton_3)
+        self.pushButton_5 = QtWidgets.QPushButton(self.horizontalLayoutWidget)
+        self.pushButton_5.setObjectName("pushButton_5")
+        self.horizontalLayout.addWidget(self.pushButton_5)
+        self.pushButton_4 = QtWidgets.QPushButton(self.horizontalLayoutWidget)
+        self.pushButton_4.setObjectName("pushButton_4")
+        self.horizontalLayout.addWidget(self.pushButton_4)
+        self.pushButton_2 = QtWidgets.QPushButton(self.horizontalLayoutWidget)
+        self.pushButton_2.setObjectName("pushButton_2")
+        self.horizontalLayout.addWidget(self.pushButton_2)
+        self.horizontalLayoutWidget_2 = QtWidgets.QWidget(self.frame)
+        self.horizontalLayoutWidget_2.setGeometry(QtCore.QRect(200, 19, 431, 52))
+        self.horizontalLayoutWidget_2.setObjectName("horizontalLayoutWidget_2")
+        self.horizontalLayout_2 = QtWidgets.QHBoxLayout(self.horizontalLayoutWidget_2)
+        self.horizontalLayout_2.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_2.setObjectName("horizontalLayout_2")
+        self.lineEdit = QtWidgets.QLineEdit(self.horizontalLayoutWidget_2)
+        self.lineEdit.setObjectName("lineEdit")
+        self.horizontalLayout_2.addWidget(self.lineEdit)
+        self.pushButton = QtWidgets.QPushButton(self.horizontalLayoutWidget_2)
+        self.pushButton.setObjectName("pushButton")
+        self.horizontalLayout_2.addWidget(self.pushButton)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 1187, 26))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 1196, 26))
         self.menubar.setObjectName("menubar")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
@@ -329,10 +328,16 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
-        self.label_8.setText(_translate("MainWindow", "<html><head/><body><p align=\"center\"><span style=\" font-size:16pt;\">管理员界面</span></p></body></html>"))
-        self.label_5.setText(_translate("MainWindow", "<html><head/><body><p align=\"center\"><span style=\" font-size:16pt;\">会员界面</span></p></body></html>"))
-        self.label_13.setText(_translate("MainWindow", "<html><head/><body><p align=\"center\"><span style=\" font-size:16pt;\">职工界面</span></p></body></html>"))
-        self.label_12.setText(_translate("MainWindow", "<html><head/><body><p align=\"center\"><span style=\" font-size:16pt;\">图书界面</span></p></body></html>"))
-        self.label_11.setText(_translate("MainWindow", "<html><head/><body><p align=\"center\"><span style=\" font-size:16pt;\">购书记录</span></p></body></html>"))
-        self.label_14.setText(_translate("MainWindow", "<html><head/><body><p align=\"center\"><span style=\" font-size:16pt;\">退书记录</span></p></body></html>"))
+        self.label_8.setText(_translate("MainWindow", "<a href='http://baidu.com'><html><head/><body><p align=\"center\"><span style=\" font-size:16pt;\">管理员界面</span></p></body></html></a>"))
+        self.label_13.setText(_translate("MainWindow", "<a href='#'><html><head/><body><p align=\"center\"><span style=\" font-size:16pt;\">职工界面</span></p></body></html></a>"))
+        self.label_5.setText(_translate("MainWindow", "<a href='http://baidu.com'><html><head/><body><p align=\"center\"><span style=\" font-size:16pt;\">会员界面</span></p></body></html></a>"))
+        self.label_12.setText(_translate("MainWindow", "<a href='http://baidu.com'><html><head/><body><p align=\"center\"><span style=\" font-size:16pt;\">图书界面</span></p></body></html></a>"))
+        self.label_11.setText(_translate("MainWindow", "<a href='http://baidu.com'><html><head/><body><p align=\"center\"><span style=\" font-size:16pt;\">购书记录</span></p></body></html></a>"))
+        self.label_14.setText(_translate("MainWindow", "<a href='http://baidu.com'><html><head/><body><p align=\"center\"><span style=\" font-size:16pt;\">退书记录</span></p></body></html></a>"))
+        self.pushButton_3.setText(_translate("MainWindow", "插入"))
+        self.pushButton_5.setText(_translate("MainWindow", "导入"))
+        self.pushButton_4.setText(_translate("MainWindow", "导出"))
+        self.pushButton_2.setText(_translate("MainWindow", "批量删除"))
+        self.lineEdit.setPlaceholderText(_translate("MainWindow", "输入查询内容"))
+        self.pushButton.setText(_translate("MainWindow", "查询"))
 import sources_rc
