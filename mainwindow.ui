@@ -17,7 +17,7 @@
    <widget class="QFrame" name="frame">
     <property name="geometry">
      <rect>
-      <x>10</x>
+      <x>0</x>
       <y>0</y>
       <width>1152</width>
       <height>648</height>
@@ -218,7 +218,7 @@ QTreeView::branch:open:has-children:has-siblings  {
      </property>
      <property name="geometry">
       <rect>
-       <x>1110</x>
+       <x>1130</x>
        <y>10</y>
        <width>20</width>
        <height>20</height>
@@ -355,8 +355,8 @@ QLabel::hover{
       <rect>
        <x>180</x>
        <y>80</y>
-       <width>901</width>
-       <height>551</height>
+       <width>951</width>
+       <height>501</height>
       </rect>
      </property>
      <property name="styleSheet">
@@ -366,9 +366,9 @@ QLabel::hover{
     <widget class="QWidget" name="horizontalLayoutWidget">
      <property name="geometry">
       <rect>
-       <x>660</x>
-       <y>19</y>
-       <width>411</width>
+       <x>650</x>
+       <y>20</y>
+       <width>473</width>
        <height>51</height>
       </rect>
      </property>
@@ -428,6 +428,19 @@ QLabel::hover{
        </widget>
       </item>
      </layout>
+    </widget>
+    <widget class="QPushButton" name="pushButton_6">
+     <property name="geometry">
+      <rect>
+       <x>190</x>
+       <y>600</y>
+       <width>113</width>
+       <height>28</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>保存修改</string>
+     </property>
     </widget>
    </widget>
   </widget>

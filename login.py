@@ -23,6 +23,7 @@ class loginForm(QDialog, Ui_Login):
 
     def btnLogin_clicked(self):#登录
         print("btnLogin is clicked")
+       
 
     def btnSignin_clicked(self):#注册窗口
         print("btnSign is clicked")

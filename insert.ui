@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>202</width>
-    <height>364</height>
+    <width>226</width>
+    <height>426</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -23,9 +23,9 @@
    <property name="geometry">
     <rect>
      <x>0</x>
-     <y>0</y>
+     <y>10</y>
      <width>201</width>
-     <height>361</height>
+     <height>411</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -63,7 +63,7 @@ border-radius:3px  ;
     <item>
      <widget class="QLineEdit" name="lineEdit">
       <property name="placeholderText">
-       <string>ISBN</string>
+       <string>图书编号</string>
       </property>
       <property name="clearButtonEnabled">
        <bool>true</bool>
@@ -72,8 +72,11 @@ border-radius:3px  ;
     </item>
     <item>
      <widget class="QLineEdit" name="lineEdit_2">
+      <property name="text">
+       <string/>
+      </property>
       <property name="placeholderText">
-       <string>书名</string>
+       <string>图书名称</string>
       </property>
       <property name="clearButtonEnabled">
        <bool>true</bool>
@@ -83,7 +86,7 @@ border-radius:3px  ;
     <item>
      <widget class="QLineEdit" name="lineEdit_3">
       <property name="placeholderText">
-       <string>作者</string>
+       <string>图书出版社</string>
       </property>
       <property name="clearButtonEnabled">
        <bool>true</bool>
@@ -91,12 +94,22 @@ border-radius:3px  ;
      </widget>
     </item>
     <item>
-     <widget class="QLineEdit" name="lineEdit_4">
+     <widget class="QLineEdit" name="lineEdit_7">
       <property name="inputMask">
        <string/>
       </property>
       <property name="placeholderText">
-       <string>出版时间</string>
+       <string>图书价格</string>
+      </property>
+      <property name="clearButtonEnabled">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLineEdit" name="lineEdit_6">
+      <property name="placeholderText">
+       <string>图书作者</string>
       </property>
       <property name="clearButtonEnabled">
        <bool>true</bool>
@@ -106,7 +119,7 @@ border-radius:3px  ;
     <item>
      <widget class="QLineEdit" name="lineEdit_5">
       <property name="placeholderText">
-       <string>出版社</string>
+       <string>图书类别</string>
       </property>
       <property name="clearButtonEnabled">
        <bool>true</bool>

@@ -278,7 +278,7 @@ class Ui_MainWindow(object):
         self.label_14.setObjectName("label_14")
         self.verticalLayout.addWidget(self.label_14)
         self.tableWidget_Admin = QtWidgets.QTableWidget(self.frame)
-        self.tableWidget_Admin.setGeometry(QtCore.QRect(180, 80, 901, 551))
+        self.tableWidget_Admin.setGeometry(QtCore.QRect(180, 80, 951, 551))
         self.tableWidget_Admin.setStyleSheet("")
         self.tableWidget_Admin.setObjectName("tableWidget_Admin")
         self.tableWidget_Admin.setColumnCount(0)

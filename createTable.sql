@@ -1,3 +1,4 @@
+use bookmanage;
 -- 会员表
 CREATE TABLE 会员 (
     会员编号 INT PRIMARY KEY,
