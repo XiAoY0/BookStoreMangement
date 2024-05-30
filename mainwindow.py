@@ -5,23 +5,136 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import QFileDialog, QMainWindow, QMessageBox , QLineEdit,QApplication,QPushButton, QVBoxLayout, QWidget, QDialog,QLabel,QTableWidgetItem
+from Ui_insert_Employ import Ui_Insert_E
 from Ui_insert import Ui_Insert
 from Ui_Login import Ui_Login
 from Ui_register import Ui_Register
 from Ui_forget_widget import Ui_forget_widget
 from Ui_mainwindow import Ui_MainWindow
 from Ui_Employee import Ui_MainWindow_E
-class InsertForm1(QWidget,Ui_Insert):
-    def __init__(self):
+from Ui_insert_Customer import Ui_Insert_C
+
+class InsertForm_C(QWidget,Ui_Insert_C):
+    def __init__(self,parent_window):
         super().__init__()
         self.setWindowFlags(Qt.FramelessWindowHint)#隐藏边框
         self.setAttribute(Qt.WA_TranslucentBackground)#透明背景
         self.setupUi(self)
+        self.parent_window=parent_window
         self.pushButton_2.clicked.connect(self.Insertquit_clicked)#取消插入
         self.pushButton_3.clicked.connect(self.InsertClear_clicked)#重置插入页面
         self.pushButton.clicked.connect(self.InsertMakesure_clicked)#重置插入页面
     def InsertMakesure_clicked(self):
         print('Make sure insert')
+        self.CustomerID=self.lineEdit.text()
+        self.CustomerName=self.lineEdit_2.text()
+        self.CustomerFrom=self.lineEdit_3.text()
+        self.Customermajor=self.lineEdit_7.text()
+        self.Customerconnect=self.lineEdit_6.text()
+        
+        self.Insert_data_customer = (self.CustomerID, self.CustomerName, self.CustomerFrom, self.Customermajor, self.Customerconnect)
+        insert_data('会员',self.Insert_data_customer)
+        # 插入数据后更新界面显示
+        self.parent_window.CustomerWindowShow()
+        
+    def Insertquit_clicked(self):
+        print('Insertquit cilcked')
+        self.close()
+    def InsertClear_clicked(self):
+        print('InsertClear clicked')
+        self.lineEdit.clear()
+        self.lineEdit_2.clear()
+        self.lineEdit_3.clear()
+        self.lineEdit_6.clear()
+        self.lineEdit_7.clear()
+    # 重写移动，点击事件 使能够拖动透明背景移动 不要删
+    def mouseMoveEvent(self, e: QMouseEvent):  
+        if self._tracking:
+            self._endPos = e.pos() - self._startPos
+            self.move(self.pos() + self._endPos)
+    def mousePressEvent(self, e: QMouseEvent):
+        if e.button() == Qt.LeftButton:
+            self._startPos = QPoint(e.x(), e.y())
+            self._tracking = True
+    def mouseReleaseEvent(self, e: QMouseEvent):
+        if e.button() == Qt.LeftButton:
+            self._tracking = False
+            self._startPos = None
+            self._endPos = None
+class InsertForm_E(QWidget,Ui_Insert_E):
+    def __init__(self,parent_window):
+        super().__init__()
+        self.setWindowFlags(Qt.FramelessWindowHint)#隐藏边框
+        self.setAttribute(Qt.WA_TranslucentBackground)#透明背景
+        self.setupUi(self)
+        self.parent_window=parent_window
+        self.pushButton_2.clicked.connect(self.Insertquit_clicked)#取消插入
+        self.pushButton_3.clicked.connect(self.InsertClear_clicked)#重置插入页面
+        self.pushButton.clicked.connect(self.InsertMakesure_clicked)#重置插入页面
+    def InsertMakesure_clicked(self):
+        print('Make sure insert')
+        self.employID=self.lineEdit.text()
+        self.employName=self.lineEdit_2.text()
+        self.employFrom=self.lineEdit_3.text()
+        self.employPrice=self.lineEdit_5.text()
+        self.employAuthor=self.lineEdit_6.text()
+        self.employMajor=self.lineEdit_7.text()
+        self.employCount=self.lineEdit_8.text()
+        self.Insert_data_employ = (self.employID, self.employName, self.employFrom, self.employPrice, self.employAuthor, self.employMajor, self.employCount)
+        insert_data('工作人员',self.Insert_data_employ)
+        # 插入数据后更新界面显示
+        self.parent_window.EmployWindowShow()
+        
+    def Insertquit_clicked(self):
+        print('Insertquit cilcked')
+        self.close()
+    def InsertClear_clicked(self):
+        print('InsertClear clicked')
+        self.lineEdit.clear()
+        self.lineEdit_2.clear()
+        self.lineEdit_3.clear()
+        self.lineEdit_5.clear()
+        self.lineEdit_6.clear()
+        self.lineEdit_7.clear()
+        self.lineEdit_8.clear()
+    # 重写移动，点击事件 使能够拖动透明背景移动 不要删
+    def mouseMoveEvent(self, e: QMouseEvent):  
+        if self._tracking:
+            self._endPos = e.pos() - self._startPos
+            self.move(self.pos() + self._endPos)
+    def mousePressEvent(self, e: QMouseEvent):
+        if e.button() == Qt.LeftButton:
+            self._startPos = QPoint(e.x(), e.y())
+            self._tracking = True
+    def mouseReleaseEvent(self, e: QMouseEvent):
+        if e.button() == Qt.LeftButton:
+            self._tracking = False
+            self._startPos = None
+            self._endPos = None
+class InsertForm1(QWidget,Ui_Insert):
+    def __init__(self,parent_window):
+        super().__init__()
+        self.setWindowFlags(Qt.FramelessWindowHint)#隐藏边框
+        self.setAttribute(Qt.WA_TranslucentBackground)#透明背景
+        self.setupUi(self)
+        self.parent_window=parent_window
+        self.pushButton_2.clicked.connect(self.Insertquit_clicked)#取消插入
+        self.pushButton_3.clicked.connect(self.InsertClear_clicked)#重置插入页面
+        self.pushButton.clicked.connect(self.InsertMakesure_clicked)#重置插入页面
+    def InsertMakesure_clicked(self):
+        print('Make sure insert')
+        self.bookID=self.lineEdit.text()
+        self.bookName=self.lineEdit_2.text()
+        self.bookFrom=self.lineEdit_3.text()
+        self.bookPrice=self.lineEdit_5.text()
+        self.bookAuthor=self.lineEdit_6.text()
+        self.bookMajor=self.lineEdit_7.text()
+        self.bookCount=self.spinBox.value()
+        self.Insert_data_book = (self.bookID, self.bookName, self.bookFrom, self.bookPrice, self.bookAuthor, self.bookMajor, self.bookCount)
+        insert_data('图书',self.Insert_data_book)
+        # 插入数据后更新界面显示
+        self.parent_window.BookWindowShow()
+        
     def Insertquit_clicked(self):
         print('Insertquit cilcked')
         self.close()
@@ -54,17 +167,32 @@ def insert_data(table_name, data):
         conn = pymysql.connect(host='localhost', user='root', passwd='110+120+z', database='bookmanage')
         cursor = conn.cursor()
 
+        # 查询表的列名
+        cursor.execute(f"SHOW COLUMNS FROM {table_name}")
+        columns = [column[0] for column in cursor.fetchall()]
+
         # 构建插入语句
-        query = f"INSERT INTO {table_name} (列1, 列2, 列3, ...) VALUES (%s, %s, %s, ...)"
+        columns_str = ', '.join(columns)
+        placeholders = ', '.join(['%s'] * len(columns))
+        query = f"INSERT INTO {table_name} ({columns_str}) VALUES ({placeholders})"
+
         # 将数据插入数据库
         cursor.execute(query, data)
         # 提交事务
         conn.commit()
 
         print("数据插入成功")
-
+        msgBox = QMessageBox()
+        msgBox.setWindowTitle("提示")
+        msgBox.setText("插入成功")
+        msgBox.exec()
+        return
     except Exception as e:
         print(f"数据插入失败: {str(e)}")
+        msgBox = QMessageBox()
+        msgBox.setWindowTitle("提示")
+        msgBox.setText(f"数据插入失败: {str(e)}")
+        msgBox.exec()
         # 如果发生异常，回滚事务
         conn.rollback()
 
@@ -73,10 +201,10 @@ def insert_data(table_name, data):
         cursor.close()
         conn.close()
 # 要插入的数据
-data_to_insert = ('值1', '值2', '值3', ...)  # 用实际的值替换 '值1', '值2', '值3', ...
+#data_to_insert = ('值1', '值2', '值3', ...)  # 用实际的值替换 '值1', '值2', '值3', ...
 
 # 调用函数插入数据
-insert_data('表名', data_to_insert)  # 用实际的表名替换 '表名'
+#insert_data('表名', data_to_insert)  # 用实际的表名替换 '表名'
 class MainwindowForm(QMainWindow,Ui_MainWindow):
     # clicked = QtCore.pyqtSignal()
     def __init__(self):
@@ -432,9 +560,18 @@ class MainwindowForm(QMainWindow,Ui_MainWindow):
     def btnInsert_clicked(self):#插入数据
         print('Insert is clicked')
          #TODO:根据flag判断是哪个界面弹出对应的插入窗口
-        self.Insert=InsertForm1()
-        self.Insert.show()
-        self.Insert.raise_()
+        if self.searchFlag==4:
+            self.Insert=InsertForm1(self)#传递flag
+            self.Insert.show()
+            self.Insert.raise_()
+        if self.searchFlag==2:
+            self.Insert_e=InsertForm_E(self)
+            self.Insert_e.show()
+            self.Insert_e.raise_()
+        if self.searchFlag==3:
+            self.Insert_c=InsertForm_C(self)
+            self.Insert_c.show()
+            self.Insert_c.raise_()
     def btnClose_clicked(self):# 红点退出
         print("mainwindow quit")
         QCoreApplication.instance().quit()      
