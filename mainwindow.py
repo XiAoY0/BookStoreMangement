@@ -6,15 +6,58 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import QFileDialog, QMainWindow, QMessageBox , QLineEdit,QApplication,QPushButton, QVBoxLayout, QWidget, QDialog,QLabel,QTableWidgetItem
-from Ui_insert_Employ import Ui_Insert_E
-from Ui_insert import Ui_Insert
-from Ui_Login import Ui_Login
-from Ui_register import Ui_Register
-from Ui_forget_widget import Ui_forget_widget
-from Ui_mainwindow import Ui_MainWindow
-from Ui_Employee import Ui_MainWindow_E
-from Ui_insert_Customer import Ui_Insert_C
-
+from UI.Ui_insert_Employ import Ui_Insert_E
+from UI.Ui_insert import Ui_Insert
+from UI.Ui_Login import Ui_Login
+from UI.Ui_register import Ui_Register
+from UI.Ui_forget_widget import Ui_forget_widget
+from UI.Ui_mainwindow import Ui_MainWindow
+from UI.Ui_Employee import Ui_MainWindow_E
+from UI.Ui_insert_Customer import Ui_Insert_C
+from UI.Ui_insert_Admin import Ui_Insert_Admin
+class InsertForm_Admin(QWidget,Ui_Insert_Admin):
+    def __init__(self,parent_window):
+        super().__init__()
+        self.setWindowFlags(Qt.FramelessWindowHint)#隐藏边框
+        self.setAttribute(Qt.WA_TranslucentBackground)#透明背景
+        self.setupUi(self)
+        self.parent_window=parent_window
+        self.pushButton_2.clicked.connect(self.Insertquit_clicked)#取消插入
+        self.pushButton_3.clicked.connect(self.InsertClear_clicked)#重置插入页面
+        self.pushButton.clicked.connect(self.InsertMakesure_clicked)#重置插入页面
+    def InsertMakesure_clicked(self):
+        print('Make sure insert')
+        self.adID=self.lineEdit.text()
+        self.adName=self.lineEdit_2.text()
+        self.adpass=self.lineEdit_3.text()
+        
+        self.Insert_data_customer = (self.adID, self.adName, self.adpass)
+        insert_data('admin_info',self.Insert_data_customer)
+        # 插入数据后更新界面显示
+        self.parent_window.AdminWindowShow()
+        
+    def Insertquit_clicked(self):
+        print('Insertquit cilcked')
+        self.close()
+    def InsertClear_clicked(self):
+        print('InsertClear clicked')
+        self.lineEdit.clear()
+        self.lineEdit_2.clear()
+        self.lineEdit_3.clear()
+    # 重写移动，点击事件 使能够拖动透明背景移动 不要删
+    def mouseMoveEvent(self, e: QMouseEvent):  
+        if self._tracking:
+            self._endPos = e.pos() - self._startPos
+            self.move(self.pos() + self._endPos)
+    def mousePressEvent(self, e: QMouseEvent):
+        if e.button() == Qt.LeftButton:
+            self._startPos = QPoint(e.x(), e.y())
+            self._tracking = True
+    def mouseReleaseEvent(self, e: QMouseEvent):
+        if e.button() == Qt.LeftButton:
+            self._tracking = False
+            self._startPos = None
+            self._endPos = None
 class InsertForm_C(QWidget,Ui_Insert_C):
     def __init__(self,parent_window):
         super().__init__()
@@ -221,6 +264,7 @@ class MainwindowForm(QMainWindow,Ui_MainWindow):
         self.pushButton_4.clicked.connect(self.btnOut_clicked)#导出数据
         self.pushButton_2.clicked.connect(self.btnDelete_clicked)#删除数据
         self.pushButton.clicked.connect(self.btnSearch_clicked)#查询
+        self.pushButton_6.clicked.connect(self.btnSaveChange_clicked)#保存修改
         #用于查询标记 不同界面设为不同值 同样用于插入导出导入标记
         self.searchFlag=0
 
@@ -702,9 +746,133 @@ class MainwindowForm(QMainWindow,Ui_MainWindow):
                 finally:
                     cursor.close()
                     conn.close()
+    def btnSaveChange_clicked(self):
+        if self.searchFlag==1:
+            table_name='admin_info'
+            try:
+            # 调用保存修改的函数，传入表名作为参数
+                self.save_changes_to_database(table_name)
+            except Exception as e:
+                QMessageBox.critical(self, "错误", f"保存修改时发生异常：{str(e)}")
+        elif self.searchFlag==2:
+            table_name='工作人员'
+            try:
+            # 调用保存修改的函数，传入表名作为参数
+                self.save_changes_to_database(table_name)
+            except Exception as e:
+                QMessageBox.critical(self, "错误", f"保存修改时发生异常：{str(e)}")            
+        elif self.searchFlag==3:
+            table_name='会员'
+            try:
+            # 调用保存修改的函数，传入表名作为参数
+                self.save_changes_to_database(table_name)
+            except Exception as e:
+                QMessageBox.critical(self, "错误", f"保存修改时发生异常：{str(e)}")            
+        elif self.searchFlag==4:
+            table_name='图书'
+            try:
+            # 调用保存修改的函数，传入表名作为参数
+                self.save_changes_to_database(table_name)
+            except Exception as e:
+                QMessageBox.critical(self, "错误", f"保存修改时发生异常：{str(e)}")            
+        elif self.searchFlag==5:
+            QMessageBox.information(self,"提示","购书记录由系统生成，不支持修改")
+        elif self.searchFlag==6:
+            QMessageBox.information(self,"提示","退书记录由系统生成，不支持修改")
         
+    def save_changes_to_database(self,table_name):#修改函数执行
+        conn = pymysql.Connect(host='localhost', user='root', passwd='110+120+z', database='bookmanage')
+        cursor = conn.cursor()
+        try:
+            for row in range(self.tableWidget_Admin.rowCount()):
+                values = []
+                primary_key_value = self.tableWidget_Admin.item(row, 0).text()  # 第一列作为主键值
+                primary_key_name = self.tableWidget_Admin.horizontalHeaderItem(0).text()  # 获取主键列的列名
+                for column in range(self.tableWidget_Admin.columnCount()):
+                    item = self.tableWidget_Admin.item(row, column)
+                    if item is not None:
+                        values.append(item.text())
+                    else:
+                        values.append('')
+                    # 检查是否修改了主键列，如果是，则跳过当前行的更新
+                    if column == 0 and primary_key_value != self.tableWidget_Admin.item(row, column).text():
+                        QMessageBox.warning(self, "警告", "主键列不支持更新")
+                        break
+                else:
+                    # 构建 UPDATE 语句
+                    placeholders = ', '.join([f'{self.tableWidget_Admin.horizontalHeaderItem(column).text()} = %s' for column in range(1, self.tableWidget_Admin.columnCount())])  # 从第二列开始构建 SET 子句
+                    cursor.execute(f"UPDATE {table_name} SET {placeholders} WHERE {primary_key_name} = %s", (values[1:] + [primary_key_value]))  # 使用主键列更新
+            conn.commit()
+            QMessageBox.information(self, "提示", "修改已生效")
+        except Exception as e:
+            conn.rollback()#回滚事务
+            raise e#将异常重新抛出
+        finally:
+            cursor.close()
+            conn.close()
+    def deleteAllSelected(self,table_name):#执行删除操作
+        selected_items = self.tableWidget_Admin.selectedItems()
+        if selected_items:
+            reply = QMessageBox.question(self, '确认删除', '确定要删除选中的行吗？', QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+            if reply == QMessageBox.Yes:
+                selected_row = selected_items[0].row()  # 获取选中的行号
+                primary_key_value = self.tableWidget_Admin.item(selected_row, 0).text()  # 获取选中行的主键值，假设主键列在第一列
+                # 执行删除操作
+                conn = pymysql.Connect(host='localhost', user='root', passwd='110+120+z', database='bookmanage')
+                cursor = conn.cursor()
+                try:
+                    cursor.execute(f"DELETE FROM {table_name} WHERE {self.tableWidget_Admin.horizontalHeaderItem(0).text()} = %s", (primary_key_value,))
+                    conn.commit()
+                    QMessageBox.information(self, "提示", "删除成功")
+                    if self.searchFlag==1:
+                        self.AdminWindowShow()
+                    elif self.searchFlag==2:
+                        self.EmployWindowShow()
+                    elif self.searchFlag==3:
+                        self.CustomerWindowShow()
+                    elif self.searchFlag==4:
+                        self.BookWindowShow()
+                    
+                except Exception as e:
+                    conn.rollback()  # 回滚事务
+                    QMessageBox.warning(self, "警告", f"删除失败：{str(e)}")
+                finally:
+                    cursor.close()
+                    conn.close()
+            else:
+                return
+        else:
+            QMessageBox.warning(self, "警告", "请先选择要删除的行")       
     def btnDelete_clicked(self):
         print('btnDelete is clicked')
+        if self.searchFlag==1:
+            table_name='admin_info'
+            try:
+                self.deleteAllSelected(table_name)
+            except Exception as e:
+                QMessageBox.critical(self, "错误", f"删除时发生异常：{str(e)}")
+        elif self.searchFlag==2:
+            table_name='工作人员'
+            try:
+                self.deleteAllSelected(table_name)
+            except Exception as e:
+                QMessageBox.critical(self, "错误", f"删除时发生异常：{str(e)}")            
+        elif self.searchFlag==3:
+            table_name='会员'
+            try:
+                self.deleteAllSelected(table_name)
+            except Exception as e:
+                QMessageBox.critical(self, "错误", f"删除时发生异常：{str(e)}")            
+        elif self.searchFlag==4:
+            table_name='图书'
+            try:
+                self.deleteAllSelected(table_name)
+            except Exception as e:
+                QMessageBox.critical(self, "错误", f"删除时发生异常：{str(e)}")            
+        elif self.searchFlag==5:
+            QMessageBox.information(self,"提示","购书记录由系统生成，不支持删除")
+        elif self.searchFlag==6:
+            QMessageBox.information(self,"提示","退书记录由系统生成，不支持删除")
     def BookBackWindowShow(self):#退书记录
         print('BookBackWindowShow')
         self.searchFlag=6
@@ -722,7 +890,7 @@ class MainwindowForm(QMainWindow,Ui_MainWindow):
         for row_index, row_data in enumerate(data):
             for col_index, col_data in enumerate(row_data):
                 item = QTableWidgetItem(str(col_data))
-                item.setFlags(item.flags() | Qt.ItemIsEditable)  # 设置每个单元格可编辑
+                item.setFlags(item.flags() & ~Qt.ItemIsEditable)  # 设置每个单元格不可编辑
                 self.tableWidget_Admin.setItem(row_index, col_index, item)
         cursor.close()
         conn.close()
@@ -743,7 +911,7 @@ class MainwindowForm(QMainWindow,Ui_MainWindow):
         for row_index, row_data in enumerate(data):
             for col_index, col_data in enumerate(row_data):
                 item = QTableWidgetItem(str(col_data))
-                item.setFlags(item.flags() | Qt.ItemIsEditable)  # 设置每个单元格可编辑
+                item.setFlags(item.flags() & ~Qt.ItemIsEditable)  # 设置每个单元格不可编辑
                 self.tableWidget_Admin.setItem(row_index, col_index, item)
         cursor.close()
         conn.close()
@@ -763,7 +931,12 @@ class MainwindowForm(QMainWindow,Ui_MainWindow):
             self.tableWidget_Admin.setHorizontalHeaderItem(col_index, header_item)
         for row_index, row_data in enumerate(data):
             for col_index, col_data in enumerate(row_data):
-                self.tableWidget_Admin.setItem(row_index, col_index, QTableWidgetItem(str(col_data)))
+                item = QTableWidgetItem(str(col_data))
+                if col_index == 0:  # 如果是第一列
+                    item.setFlags(item.flags() & ~Qt.ItemIsEditable)  # 设置第一列单元格不可编辑
+                else:
+                    item.setFlags(item.flags() | Qt.ItemIsEditable)  # 设置其他单元格可编辑
+                self.tableWidget_Admin.setItem(row_index, col_index, item)
         cursor.close()
         conn.close()
     def CustomerWindowShow(self):# 会员界面
@@ -783,7 +956,10 @@ class MainwindowForm(QMainWindow,Ui_MainWindow):
         for row_index, row_data in enumerate(data):
             for col_index, col_data in enumerate(row_data):
                 item = QTableWidgetItem(str(col_data))
-                item.setFlags(item.flags() | Qt.ItemIsEditable)  # 设置每个单元格可编辑
+                if col_index == 0:  # 如果是第一列
+                    item.setFlags(item.flags() & ~Qt.ItemIsEditable)  # 设置第一列单元格不可编辑
+                else:
+                    item.setFlags(item.flags() | Qt.ItemIsEditable)  # 设置其他单元格可编辑
                 self.tableWidget_Admin.setItem(row_index, col_index, item)
         cursor.close()
         conn.close()
@@ -805,8 +981,12 @@ class MainwindowForm(QMainWindow,Ui_MainWindow):
         for row_index, row_data in enumerate(data):
             for col_index, col_data in enumerate(row_data):
                 item = QTableWidgetItem(str(col_data))
-                item.setFlags(item.flags() | Qt.ItemIsEditable)  # 设置每个单元格可编辑
+                if col_index == 0:  # 如果是第一列
+                    item.setFlags(item.flags() & ~Qt.ItemIsEditable)  # 设置第一列单元格不可编辑
+                else:
+                    item.setFlags(item.flags() | Qt.ItemIsEditable)  # 设置其他单元格可编辑
                 self.tableWidget_Admin.setItem(row_index, col_index, item)
+        cursor.close()
         cursor.close()
         conn.close()
     def AdminWindowShow(self):    #管理员界面
@@ -826,25 +1006,33 @@ class MainwindowForm(QMainWindow,Ui_MainWindow):
         for row_index, row_data in enumerate(data):
             for col_index, col_data in enumerate(row_data):
                 item = QTableWidgetItem(str(col_data))
-                item.setFlags(item.flags() | Qt.ItemIsEditable)  # 设置每个单元格可编辑
+                if col_index == 0:  # 如果是第一列
+                    item.setFlags(item.flags() & ~Qt.ItemIsEditable)  # 设置第一列单元格不可编辑
+                else:
+                    item.setFlags(item.flags() | Qt.ItemIsEditable)  # 设置其他单元格可编辑
                 self.tableWidget_Admin.setItem(row_index, col_index, item)
+        cursor.close()
         cursor.close()
         conn.close()
     def btnInsert_clicked(self):#插入数据
         print('Insert is clicked')
          #TODO:根据flag判断是哪个界面弹出对应的插入窗口
         if self.searchFlag==4:
-            self.Insert=InsertForm1(self)#传递flag
+            self.Insert=InsertForm1(self)#传递父窗口
             self.Insert.show()
             self.Insert.raise_()
-        if self.searchFlag==2:
+        elif self.searchFlag==2:
             self.Insert_e=InsertForm_E(self)
             self.Insert_e.show()
             self.Insert_e.raise_()
-        if self.searchFlag==3:
+        elif self.searchFlag==3:
             self.Insert_c=InsertForm_C(self)
             self.Insert_c.show()
             self.Insert_c.raise_()
+        elif self.searchFlag==1:
+            self.Insert_Admin=InsertForm_Admin(self)
+            self.Insert_Admin.show()
+            self.Insert_Admin.raise_()
     def btnClose_clicked(self):# 红点退出
         print("mainwindow quit")
         QCoreApplication.instance().quit()      

@@ -4,9 +4,9 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import QFileDialog, QMainWindow, QMessageBox , QLineEdit,QApplication,QPushButton, QVBoxLayout, QWidget, QDialog
-from Ui_Login import Ui_Login
-from Ui_register import Ui_Register
-from Ui_forget_widget import Ui_forget_widget
+from UI.Ui_Login import Ui_Login
+from UI.Ui_register import Ui_Register
+from UI.Ui_forget_widget import Ui_forget_widget
 
 class RegisterForm(QDialog,Ui_Register):
     def __init__(self):
