@@ -1,5 +1,6 @@
 import sys
 import os
+import csv
 import pymysql
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import *
@@ -76,9 +77,9 @@ class InsertForm_E(QWidget,Ui_Insert_E):
         self.employID=self.lineEdit.text()
         self.employName=self.lineEdit_2.text()
         self.employFrom=self.lineEdit_3.text()
-        self.employPrice=self.lineEdit_5.text()
+        self.employPrice=self.lineEdit_7.text()
         self.employAuthor=self.lineEdit_6.text()
-        self.employMajor=self.lineEdit_7.text()
+        self.employMajor=self.lineEdit_5.text()
         self.employCount=self.lineEdit_8.text()
         self.Insert_data_employ = (self.employID, self.employName, self.employFrom, self.employPrice, self.employAuthor, self.employMajor, self.employCount)
         insert_data('工作人员',self.Insert_data_employ)
@@ -126,9 +127,9 @@ class InsertForm1(QWidget,Ui_Insert):
         self.bookID=self.lineEdit.text()
         self.bookName=self.lineEdit_2.text()
         self.bookFrom=self.lineEdit_3.text()
-        self.bookPrice=self.lineEdit_5.text()
+        self.bookPrice=self.lineEdit_7.text()
         self.bookAuthor=self.lineEdit_6.text()
-        self.bookMajor=self.lineEdit_7.text()
+        self.bookMajor=self.lineEdit_5.text()
         self.bookCount=self.spinBox.value()
         self.Insert_data_book = (self.bookID, self.bookName, self.bookFrom, self.bookPrice, self.bookAuthor, self.bookMajor, self.bookCount)
         insert_data('图书',self.Insert_data_book)
@@ -212,7 +213,7 @@ class MainwindowForm(QMainWindow,Ui_MainWindow):
         self.setWindowFlags(Qt.FramelessWindowHint)#隐藏边框
         self.setAttribute(Qt.WA_TranslucentBackground)#透明背景
         self.setupUi(self)
-        self.setFixedSize(1152,680)
+        #self.setFixedSize(1152,680)
         #槽函数绑定 主要是标签点击切换显示界面
         self.btn_Close.clicked.connect(self.btnClose_clicked)#关闭窗口函数
         self.pushButton_3.clicked.connect(self.btnInsert_clicked)#插入数据
@@ -437,9 +438,271 @@ class MainwindowForm(QMainWindow,Ui_MainWindow):
             conn.close()
     def btnInsertLot_clicked(self):
         print('Lots of logs to insert')
-        
+        if self.searchFlag==4:
+            options = QFileDialog.Options()
+            file_name, _ = QFileDialog.getOpenFileName(self,"选择CSV文件", "","CSV Files (*.csv)", options=options)
+            if file_name:
+                try:
+                    conn = pymysql.Connect(host='localhost', user='root', passwd='110+120+z', database='bookmanage')
+                    cursor = conn.cursor()
+                    with open(file_name, 'r', encoding='utf-8') as file:
+                        csv_reader = csv.reader(file)
+                        next(csv_reader)  # 跳过标题行
+                        for row in csv_reader:
+                            # 插入数据的SQL语句
+                            query = """
+                            INSERT INTO 图书 (图书编号, 图书名称, 图书出版社, 图书价格, 图书作者, 图书类别, 图书库存数量)
+                            VALUES (%s, %s, %s, %s, %s, %s, %s)
+                            """
+                            # 执行插入操作
+                            cursor.execute(query, row)
+                    # 提交事务
+                    conn.commit()
+                    QMessageBox.information(self, "提示", "批量导入成功")
+                
+                except Exception as e:
+                    QMessageBox.warning(self, "错误", f"批量导入失败: {str(e)}")
+
+                finally:
+                    cursor.close()
+                    conn.close()       
     def btnOut_clicked(self):
         print('btnOut is clicked')
+        if self.searchFlag==1:
+            print("导出管理员信息")
+            # 创建文件对话框，让用户选择保存的文件路径
+            file_dialog = QFileDialog()
+            file_path, _ = file_dialog.getSaveFileName(self, "保存CSV文件", "", "CSV 文件 (*.csv)")
+
+            if file_path:
+                try:
+                    conn = pymysql.Connect(host='localhost', user='root', passwd='110+120+z', database='bookmanage')
+                    cursor = conn.cursor()
+
+                    # 执行查询语句，获取数据库中的数据
+                    cursor.execute("SELECT * FROM admin_info")
+                    data = cursor.fetchall()
+
+                    # 将数据写入CSV文件
+                    with open(file_path, 'w', newline='', encoding='utf-8') as file:
+                        csv_writer = csv.writer(file)
+                        csv_writer.writerow([i[0] for i in cursor.description])  # 写入列名
+                        csv_writer.writerows(data)  # 写入数据
+
+                    print("数据已成功导出为CSV文件。")
+                    msgBox = QMessageBox()
+                    msgBox.setWindowTitle("提示")
+                    msgBox.setText("已成功导出管理员信息！请妥善保管！")
+                    msgBox.exec()
+                    return
+
+                except Exception as e:
+                    print("导出失败:", e)
+                    msgBox = QMessageBox()
+                    msgBox.setWindowTitle("提示")
+                    msgBox.setText(f"导出失败！{e}")
+                    msgBox.exec()
+                    return
+
+                finally:
+                    cursor.close()
+                    conn.close()
+        elif self.searchFlag==4:
+            print("test")
+            # 创建文件对话框，让用户选择保存的文件路径
+            file_dialog = QFileDialog()
+            file_path, _ = file_dialog.getSaveFileName(self, "保存CSV文件", "", "CSV 文件 (*.csv)")
+
+            if file_path:
+                try:
+                    conn = pymysql.Connect(host='localhost', user='root', passwd='110+120+z', database='bookmanage')
+                    cursor = conn.cursor()
+
+                    # 执行查询语句，获取数据库中的数据
+                    cursor.execute("SELECT * FROM 图书")
+                    data = cursor.fetchall()
+
+                    # 将数据写入CSV文件
+                    with open(file_path, 'w', newline='', encoding='utf-8') as file:
+                        csv_writer = csv.writer(file)
+                        csv_writer.writerow([i[0] for i in cursor.description])  # 写入列名
+                        csv_writer.writerows(data)  # 写入数据
+
+                    print("数据已成功导出为CSV文件。")
+                    msgBox = QMessageBox()
+                    msgBox.setWindowTitle("提示")
+                    msgBox.setText("已成功导出图书信息！")
+                    msgBox.exec()
+                    return
+
+                except Exception as e:
+                    print("导出失败:", e)
+                    msgBox = QMessageBox()
+                    msgBox.setWindowTitle("提示")
+                    msgBox.setText(f"导出失败！{e}")
+                    msgBox.exec()
+                    return
+
+                finally:
+                    cursor.close()
+                    conn.close()
+        elif self.searchFlag==2:
+            print("导出职工信息")
+            # 创建文件对话框，让用户选择保存的文件路径
+            file_dialog = QFileDialog()
+            file_path, _ = file_dialog.getSaveFileName(self, "保存CSV文件", "", "CSV 文件 (*.csv)")
+
+            if file_path:
+                try:
+                    conn = pymysql.Connect(host='localhost', user='root', passwd='110+120+z', database='bookmanage')
+                    cursor = conn.cursor()
+
+                    # 执行查询语句，获取数据库中的数据
+                    cursor.execute("SELECT * FROM 工作人员")
+                    data = cursor.fetchall()
+
+                    # 将数据写入CSV文件
+                    with open(file_path, 'w', newline='', encoding='utf-8') as file:
+                        csv_writer = csv.writer(file)
+                        csv_writer.writerow([i[0] for i in cursor.description])  # 写入列名
+                        csv_writer.writerows(data)  # 写入数据
+
+                    print("数据已成功导出为CSV文件。")
+                    msgBox = QMessageBox()
+                    msgBox.setWindowTitle("提示")
+                    msgBox.setText("已成功导出职工信息！")
+                    msgBox.exec()
+                    return
+
+                except Exception as e:
+                    print("导出失败:", e)
+                    msgBox = QMessageBox()
+                    msgBox.setWindowTitle("提示")
+                    msgBox.setText(f"导出失败！{e}")
+                    msgBox.exec()
+                    return
+
+                finally:
+                    cursor.close()
+                    conn.close()
+        elif self.searchFlag==3:
+            print("导出顾客信息")
+            # 创建文件对话框，让用户选择保存的文件路径
+            file_dialog = QFileDialog()
+            file_path, _ = file_dialog.getSaveFileName(self, "保存CSV文件", "", "CSV 文件 (*.csv)")
+
+            if file_path:
+                try:
+                    conn = pymysql.Connect(host='localhost', user='root', passwd='110+120+z', database='bookmanage')
+                    cursor = conn.cursor()
+
+                    # 执行查询语句，获取数据库中的数据
+                    cursor.execute("SELECT * FROM 会员")
+                    data = cursor.fetchall()
+
+                    # 将数据写入CSV文件
+                    with open(file_path, 'w', newline='', encoding='utf-8') as file:
+                        csv_writer = csv.writer(file)
+                        csv_writer.writerow([i[0] for i in cursor.description])  # 写入列名
+                        csv_writer.writerows(data)  # 写入数据
+
+                    print("数据已成功导出为CSV文件。")
+                    msgBox = QMessageBox()
+                    msgBox.setWindowTitle("提示")
+                    msgBox.setText("已成功导出会员信息！")
+                    msgBox.exec()
+                    return
+
+                except Exception as e:
+                    print("导出失败:", e)
+                    msgBox = QMessageBox()
+                    msgBox.setWindowTitle("提示")
+                    msgBox.setText(f"导出失败！{e}")
+                    msgBox.exec()
+                    return
+
+                finally:
+                    cursor.close()
+                    conn.close()
+        elif self.searchFlag==5:
+            print("test")
+            # 创建文件对话框，让用户选择保存的文件路径
+            file_dialog = QFileDialog()
+            file_path, _ = file_dialog.getSaveFileName(self, "保存CSV文件", "", "CSV 文件 (*.csv)")
+
+            if file_path:
+                try:
+                    conn = pymysql.Connect(host='localhost', user='root', passwd='110+120+z', database='bookmanage')
+                    cursor = conn.cursor()
+
+                    # 执行查询语句，获取数据库中的数据
+                    cursor.execute("SELECT * FROM 购买记录")
+                    data = cursor.fetchall()
+
+                    # 将数据写入CSV文件
+                    with open(file_path, 'w', newline='', encoding='utf-8') as file:
+                        csv_writer = csv.writer(file)
+                        csv_writer.writerow([i[0] for i in cursor.description])  # 写入列名
+                        csv_writer.writerows(data)  # 写入数据
+
+                    print("数据已成功导出为CSV文件。")
+                    msgBox = QMessageBox()
+                    msgBox.setWindowTitle("提示")
+                    msgBox.setText("已成功导出购买记录！")
+                    msgBox.exec()
+                    return
+
+                except Exception as e:
+                    print("导出失败:", e)
+                    msgBox = QMessageBox()
+                    msgBox.setWindowTitle("提示")
+                    msgBox.setText(f"导出失败！{e}")
+                    msgBox.exec()
+                    return
+
+                finally:
+                    cursor.close()
+                    conn.close()
+        elif self.searchFlag==6:
+            print("test")
+            # 创建文件对话框，让用户选择保存的文件路径
+            file_dialog = QFileDialog()
+            file_path, _ = file_dialog.getSaveFileName(self, "保存CSV文件", "", "CSV 文件 (*.csv)")
+
+            if file_path:
+                try:
+                    conn = pymysql.Connect(host='localhost', user='root', passwd='110+120+z', database='bookmanage')
+                    cursor = conn.cursor()
+
+                    # 执行查询语句，获取数据库中的数据
+                    cursor.execute("SELECT * FROM 退书记录")
+                    data = cursor.fetchall()
+
+                    # 将数据写入CSV文件
+                    with open(file_path, 'w', newline='', encoding='utf-8') as file:
+                        csv_writer = csv.writer(file)
+                        csv_writer.writerow([i[0] for i in cursor.description])  # 写入列名
+                        csv_writer.writerows(data)  # 写入数据
+
+                    print("数据已成功导出为CSV文件。")
+                    msgBox = QMessageBox()
+                    msgBox.setWindowTitle("提示")
+                    msgBox.setText("已成功导出退书记录！")
+                    msgBox.exec()
+                    return
+
+                except Exception as e:
+                    print("导出失败:", e)
+                    msgBox = QMessageBox()
+                    msgBox.setWindowTitle("提示")
+                    msgBox.setText(f"导出失败！{e}")
+                    msgBox.exec()
+                    return
+
+                finally:
+                    cursor.close()
+                    conn.close()
+        
     def btnDelete_clicked(self):
         print('btnDelete is clicked')
     def BookBackWindowShow(self):#退书记录
@@ -458,7 +721,9 @@ class MainwindowForm(QMainWindow,Ui_MainWindow):
             self.tableWidget_Admin.setHorizontalHeaderItem(col_index, header_item)
         for row_index, row_data in enumerate(data):
             for col_index, col_data in enumerate(row_data):
-                self.tableWidget_Admin.setItem(row_index, col_index, QTableWidgetItem(str(col_data)))
+                item = QTableWidgetItem(str(col_data))
+                item.setFlags(item.flags() | Qt.ItemIsEditable)  # 设置每个单元格可编辑
+                self.tableWidget_Admin.setItem(row_index, col_index, item)
         cursor.close()
         conn.close()
     def BookBuyWindowShow(self):# 购书记录
@@ -477,7 +742,9 @@ class MainwindowForm(QMainWindow,Ui_MainWindow):
             self.tableWidget_Admin.setHorizontalHeaderItem(col_index, header_item)
         for row_index, row_data in enumerate(data):
             for col_index, col_data in enumerate(row_data):
-                self.tableWidget_Admin.setItem(row_index, col_index, QTableWidgetItem(str(col_data)))
+                item = QTableWidgetItem(str(col_data))
+                item.setFlags(item.flags() | Qt.ItemIsEditable)  # 设置每个单元格可编辑
+                self.tableWidget_Admin.setItem(row_index, col_index, item)
         cursor.close()
         conn.close()
     def BookWindowShow(self):# 图书
@@ -515,7 +782,9 @@ class MainwindowForm(QMainWindow,Ui_MainWindow):
             self.tableWidget_Admin.setHorizontalHeaderItem(col_index, header_item)
         for row_index, row_data in enumerate(data):
             for col_index, col_data in enumerate(row_data):
-                self.tableWidget_Admin.setItem(row_index, col_index, QTableWidgetItem(str(col_data)))
+                item = QTableWidgetItem(str(col_data))
+                item.setFlags(item.flags() | Qt.ItemIsEditable)  # 设置每个单元格可编辑
+                self.tableWidget_Admin.setItem(row_index, col_index, item)
         cursor.close()
         conn.close()
     def EmployWindowShow(self): # 职工界面   
@@ -535,7 +804,9 @@ class MainwindowForm(QMainWindow,Ui_MainWindow):
             self.tableWidget_Admin.setHorizontalHeaderItem(col_index, header_item)
         for row_index, row_data in enumerate(data):
             for col_index, col_data in enumerate(row_data):
-                self.tableWidget_Admin.setItem(row_index, col_index, QTableWidgetItem(str(col_data)))
+                item = QTableWidgetItem(str(col_data))
+                item.setFlags(item.flags() | Qt.ItemIsEditable)  # 设置每个单元格可编辑
+                self.tableWidget_Admin.setItem(row_index, col_index, item)
         cursor.close()
         conn.close()
     def AdminWindowShow(self):    #管理员界面
@@ -554,7 +825,9 @@ class MainwindowForm(QMainWindow,Ui_MainWindow):
             self.tableWidget_Admin.setHorizontalHeaderItem(col_index, header_item)
         for row_index, row_data in enumerate(data):
             for col_index, col_data in enumerate(row_data):
-                self.tableWidget_Admin.setItem(row_index, col_index, QTableWidgetItem(str(col_data)))
+                item = QTableWidgetItem(str(col_data))
+                item.setFlags(item.flags() | Qt.ItemIsEditable)  # 设置每个单元格可编辑
+                self.tableWidget_Admin.setItem(row_index, col_index, item)
         cursor.close()
         conn.close()
     def btnInsert_clicked(self):#插入数据
@@ -589,8 +862,7 @@ class MainwindowForm(QMainWindow,Ui_MainWindow):
             self._tracking = False
             self._startPos = None
             self._endPos = None
-
-class MainwindowForm_E(QMainWindow,Ui_MainWindow_E):
+class MainwindowForm_E(QMainWindow,Ui_MainWindow_E):# 职工界面主界面
     def __init__(self):
         super().__init__()
         self.setWindowFlags(Qt.FramelessWindowHint)#隐藏边框
@@ -598,7 +870,6 @@ class MainwindowForm_E(QMainWindow,Ui_MainWindow_E):
         self.setupUi(self)
         self.setFixedSize(1152,648)
         self.btn_Close.clicked.connect(self.btnClose_clicked)#关闭窗口函数
-
     def btnClose_clicked(self):
         print("mainwindow quit")
         QCoreApplication.instance().quit()      
@@ -619,6 +890,6 @@ class MainwindowForm_E(QMainWindow,Ui_MainWindow_E):
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
     window = MainwindowForm()
-    #TODO:加一个判断 显示不同界面 分为管理员（MainwindowForm_E）和职工（MainwindowForm）
+    #TODO:加一个判断 显示不同界面 分为管理员（MainwindowForm_E）和职工（MainwindowForm）职工界面相比管理员界面少了管理员和职工的显示 只显示图书、会员、退书记录、购书记录
     window.show()
     sys.exit(app.exec_())

@@ -14,11 +14,11 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(1196, 711)
+        MainWindow.resize(1329, 711)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.frame = QtWidgets.QFrame(self.centralwidget)
-        self.frame.setGeometry(QtCore.QRect(10, 0, 1152, 648))
+        self.frame.setGeometry(QtCore.QRect(0, 0, 1301, 648))
         self.frame.setStyleSheet("/*??*/\n"
 "QWidget\n"
 "{\n"
@@ -205,7 +205,7 @@ class Ui_MainWindow(object):
         self.frame.setObjectName("frame")
         self.btn_Close = QtWidgets.QPushButton(self.frame)
         self.btn_Close.setEnabled(True)
-        self.btn_Close.setGeometry(QtCore.QRect(1110, 10, 20, 20))
+        self.btn_Close.setGeometry(QtCore.QRect(1270, 10, 20, 20))
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -273,22 +273,23 @@ class Ui_MainWindow(object):
 "QLabel::hover{\n"
 "    color: rgb(255, 102, 148);\n"
 "}")
-
-
         self.label_14.setObjectName("label_14")
         self.verticalLayout.addWidget(self.label_14)
         self.tableWidget_Admin = QtWidgets.QTableWidget(self.frame)
-        self.tableWidget_Admin.setGeometry(QtCore.QRect(180, 80, 951, 551))
+        self.tableWidget_Admin.setGeometry(QtCore.QRect(180, 80, 1101, 551))
         self.tableWidget_Admin.setStyleSheet("")
         self.tableWidget_Admin.setObjectName("tableWidget_Admin")
         self.tableWidget_Admin.setColumnCount(0)
         self.tableWidget_Admin.setRowCount(0)
         self.horizontalLayoutWidget = QtWidgets.QWidget(self.frame)
-        self.horizontalLayoutWidget.setGeometry(QtCore.QRect(660, 19, 411, 51))
+        self.horizontalLayoutWidget.setGeometry(QtCore.QRect(720, 20, 541, 51))
         self.horizontalLayoutWidget.setObjectName("horizontalLayoutWidget")
         self.horizontalLayout = QtWidgets.QHBoxLayout(self.horizontalLayoutWidget)
         self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
         self.horizontalLayout.setObjectName("horizontalLayout")
+        self.pushButton_6 = QtWidgets.QPushButton(self.horizontalLayoutWidget)
+        self.pushButton_6.setObjectName("pushButton_6")
+        self.horizontalLayout.addWidget(self.pushButton_6)
         self.pushButton_3 = QtWidgets.QPushButton(self.horizontalLayoutWidget)
         self.pushButton_3.setObjectName("pushButton_3")
         self.horizontalLayout.addWidget(self.pushButton_3)
@@ -315,7 +316,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_2.addWidget(self.pushButton)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 1196, 26))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 1329, 26))
         self.menubar.setObjectName("menubar")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
@@ -334,6 +335,7 @@ class Ui_MainWindow(object):
         self.label_12.setText(_translate("MainWindow", "<a href='http://baidu.com'><html><head/><body><p align=\"center\"><span style=\" font-size:16pt;\">图书界面</span></p></body></html></a>"))
         self.label_11.setText(_translate("MainWindow", "<a href='http://baidu.com'><html><head/><body><p align=\"center\"><span style=\" font-size:16pt;\">购书记录</span></p></body></html></a>"))
         self.label_14.setText(_translate("MainWindow", "<a href='http://baidu.com'><html><head/><body><p align=\"center\"><span style=\" font-size:16pt;\">退书记录</span></p></body></html></a>"))
+        self.pushButton_6.setText(_translate("MainWindow", "保存修改"))
         self.pushButton_3.setText(_translate("MainWindow", "插入"))
         self.pushButton_5.setText(_translate("MainWindow", "导入"))
         self.pushButton_4.setText(_translate("MainWindow", "导出"))
