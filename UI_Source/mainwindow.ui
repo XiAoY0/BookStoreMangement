@@ -1,0 +1,457 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1329</width>
+    <height>711</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QFrame" name="frame">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>1301</width>
+      <height>648</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">/*??*/
+QWidget
+{
+color: rgb(50,76,108);  /*????*/
+background-color: rgb(206,220,237); /*???*/
+
+}
+QWidget#Contents
+{
+    color: rgb(50,76,108);  /*????*/
+    background-color: rgb(206,220,237); /*???*/
+}
+/*??????*/
+QPushButton#btnLogin,#btnLogout,#btnHide,#btnUpdate,#btnSure,#btnAdd,#btnDel
+{
+    background-color:rgba(189,209,233);/*???*/
+    min-height:30px; /*????*/
+    min-width:180px; /*????*/
+    border-style:solid;/*???? solid?? none??? inset/outset 3D??*/
+    border-width:4px; /*??????*/
+    border-radius:10px;/*????????*/
+    border-color:rgba(127,154,184);/*????*/
+    font-size:12pt;/*?? ????*/
+    color: rgb(50,76,108);/*????*/
+    padding:6px; /*??*/
+}
+/*??????*/
+QPushButton:pressed
+{
+    background-color:rgba(192,240,255);/*???*/
+    border-color:rgba(127,154,184);/*????*/
+    border-style:solid;/*???? solid?? none??? inset/outset 3D??*/
+    color: rgb(50,76,108);/*????*/
+}
+/*??????*/
+QPushButton#btnLogin:hover,#btnLogout:hover,#btnHide:hover,#btnUpdate:hover,#btnSure:hover,#btnAdd:hover,#btnDel:hover
+{
+    background-color:rgba(192,221,244);/*???*/
+    border-color:rgba(127,154,184);/*????*/
+    color: rgb(50,76,108);/*????*/
+}
+QLineEdit
+{
+    background-color:rgb(206,220,237);/*???*/
+    min-height:30px; /*????*/
+    min-width:180px; /*????*/
+    border-style:solid;/*???? solid?? none??? inset/outset 3D??*/
+    border-width:4px; /*??????*/
+    border-radius:10px;/*????????*/
+    border-color:rgba(127,154,184);/*????*/
+    font-size:12pt;/*?? ????*/
+    color: rgb(50,76,108);/*????*/
+    padding:6px;/*??*/
+}
+QCheckBox
+{
+    color:rgb(50,76,108);/*????*/
+    background-color:rgb(206,220,237);/*???*/
+}
+QComboBox
+{
+    background-color:rgb(206,220,237);
+    color:rgb(50,76,108);/*????*/
+    border-style:solid;/*???? solid?? none??? inset/outset 3D??*/
+    border-width:4px;/*??????*/
+    border-radius:10px;/*????????*/
+    border-color:rgba(127,154,184);/*????*/
+    min-height:35px; /*????*/
+    font-size:12pt;
+}
+/*??????????*/
+QComboBox::drop-down
+{
+     width:20px;
+     border:none;
+     background:transparent;
+ }
+/*????????*/
+QComboBox::down-arrow
+{
+    image:url(:/image/array_down.png);
+}
+/*??????????*/
+QComboBox QAbstractItemView
+{
+ background-color: rgb(206,220,237); /*???*/
+    color: rgb(50,76,108);/*????*/
+outline:none;
+}
+/*??????item*/
+QComboBox QAbstractItemView::item
+{
+    height:30px;
+    color:rgb(50,76,108);/*????*/
+}
+/*???item??*/
+QComboBox QAbstractItemView::item:selected
+{
+    background-color:rgb(206,220,237); /*???*/
+    color:rgb(50,76,108);/*????*/
+}
+QLabel
+{
+    color:rgb(50,76,108);/*????*/
+font-size:12pt;
+border:none;/*????*/
+}
+QTabWidget
+{
+    background-color: rgb(206,220,237); /*???*/
+    color:rgb(50,76,108);/*????*/
+}
+QTabBar::tab
+{
+    background-color:rgb(206,220,237); /*???*/
+    color:rgb(50,76,108);/*????*/
+    font-size:12pt;/*????*/
+    height:30px; /*??*/
+    min-width:100px;/*??*/
+    border-top-left-radius:4px;/*??????????*/
+    border-top-right-radius:4px;/*??????????*/
+    margin-right: 5px;/*???  ????*/
+    padding-left:5px;/*???--????*/
+    padding-right:5px;/*???--????*/
+}
+QTabBar::tab:hover
+{
+    background-color: rgb(206,220,237); /*???*/
+}
+QTabBar::tab:selected
+{
+    background-color: rgb(189,209,233); /*???*/
+}
+QTableView,QTableWidget{
+    background-color:rgb(206,220,237); /*???*/
+    color:rgb(50,76,108);/*????*/
+    selection-background-color:rgba(192,221,244);/*???*/;/*??????*/
+    border:1px solid #E0DDDC;/*???1?????*/
+    gridline-color:lightgray;/*????????????????*/
+    font:bold 12pt;/*?? ????*/
+}
+/*??????*/
+QHeaderView::section{
+    background-color:rgb(206,220,237); /*???*/
+    border:0px solid #E0DDDC;/*????????0??????????*/
+    border-bottom:1px solid #E0DDDC;/*??????????????????????Table?????????2px?????*/
+    min-height:30px;;/*????*/
+    font-size:12pt;/*????*/
+}
+QTreeWidget,QTreeView
+{
+    background-color:rgb(206,220,237); /*???*/
+    color:rgb(50,76,108);/*????*/
+    selection-background-color:rgba(5,23,200);/*??????*/
+    font-size:12pt;/*????*/
+}
+/*????*/
+QTreeWidget::branch:has-children:!has-siblings:closed,
+QTreeWidget::branch:closed:has-children:has-siblings {
+    border-image: none;
+    image: url(:/image/add-line_horizontal.png);
+}
+/*????*/
+QTreeWidget::branch:open:has-children:!has-siblings,
+QTreeWidget::branch:open:has-children:has-siblings  {
+    border-image: none;
+    image: url(:/image/array_down.png);
+}
+/*????*/
+QTreeView::branch:has-children:!has-siblings:closed,
+QTreeView::branch:closed:has-children:has-siblings {
+    border-image: none;
+    image: url(:/image/add-line_horizontal.png);
+}
+/*????*/
+QTreeView::branch:open:has-children:!has-siblings,
+QTreeView::branch:open:has-children:has-siblings  {
+    border-image: none;
+    image: url(:/image/array_down.png);
+}
+</string>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <widget class="QPushButton" name="btn_Close">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>1270</x>
+       <y>10</y>
+       <width>20</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>20</width>
+       <height>20</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>20</width>
+       <height>20</height>
+      </size>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton
+{
+background:#FF6694;
+border-radius:10px;
+}
+QPushButton:hover
+{
+background:#FF0000;
+}
+
+</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QWidget" name="layoutWidget">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>20</y>
+       <width>137</width>
+       <height>621</height>
+      </rect>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <widget class="QLabel" name="label_8">
+        <property name="styleSheet">
+         <string notr="true">
+QLabel::hover{
+	color: rgb(255, 102, 148);
+}</string>
+        </property>
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:16pt;&quot;&gt;管理员界面&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_13">
+        <property name="styleSheet">
+         <string notr="true">
+QLabel::hover{
+	color: rgb(255, 102, 148);
+}</string>
+        </property>
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:16pt;&quot;&gt;职工界面&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_5">
+        <property name="styleSheet">
+         <string notr="true">
+QLabel::hover{
+	color: rgb(255, 102, 148);
+}
+</string>
+        </property>
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:16pt;&quot;&gt;会员界面&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_12">
+        <property name="styleSheet">
+         <string notr="true">
+QLabel::hover{
+	color: rgb(255, 102, 148);
+}</string>
+        </property>
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:16pt;&quot;&gt;图书界面&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_11">
+        <property name="styleSheet">
+         <string notr="true">
+QLabel::hover{
+	color: rgb(255, 102, 148);
+}</string>
+        </property>
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:16pt;&quot;&gt;购书记录&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_14">
+        <property name="styleSheet">
+         <string notr="true">
+QLabel::hover{
+	color: rgb(255, 102, 148);
+}</string>
+        </property>
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:16pt;&quot;&gt;退书记录&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QTableWidget" name="tableWidget_Admin">
+     <property name="geometry">
+      <rect>
+       <x>180</x>
+       <y>80</y>
+       <width>1101</width>
+       <height>551</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
+    </widget>
+    <widget class="QWidget" name="horizontalLayoutWidget">
+     <property name="geometry">
+      <rect>
+       <x>720</x>
+       <y>20</y>
+       <width>541</width>
+       <height>51</height>
+      </rect>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QPushButton" name="pushButton_6">
+        <property name="text">
+         <string>保存修改</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pushButton_3">
+        <property name="text">
+         <string>插入</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pushButton_5">
+        <property name="text">
+         <string>导入</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pushButton_4">
+        <property name="text">
+         <string>导出</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pushButton_2">
+        <property name="text">
+         <string>批量删除</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QWidget" name="horizontalLayoutWidget_2">
+     <property name="geometry">
+      <rect>
+       <x>200</x>
+       <y>19</y>
+       <width>431</width>
+       <height>52</height>
+      </rect>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <item>
+       <widget class="QLineEdit" name="lineEdit">
+        <property name="placeholderText">
+         <string>输入查询内容</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pushButton">
+        <property name="text">
+         <string>查询</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1329</width>
+     <height>26</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources>
+  <include location="sources.qrc"/>
+ </resources>
+ <connections/>
+</ui>
