@@ -16,6 +16,7 @@ CREATE TABLE 工作人员 (
     员工身份证号 VARCHAR(20),
     员工职位 VARCHAR(50),
     员工工资 DECIMAL(10, 2)
+    员工密码 VARCHAR(50)
 );
 
 -- 图书表
