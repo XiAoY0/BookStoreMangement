@@ -811,29 +811,31 @@ class MainwindowForm(QMainWindow,Ui_MainWindow):
         finally:
             cursor.close()
             conn.close()
-    def deleteAllSelected(self,table_name):#执行删除操作
+    def deleteAllSelected(self, table_name):  # 执行删除操作
         selected_items = self.tableWidget_Admin.selectedItems()
         if selected_items:
             reply = QMessageBox.question(self, '确认删除', '确定要删除选中的行吗？', QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
             if reply == QMessageBox.Yes:
-                selected_row = selected_items[0].row()  # 获取选中的行号
-                primary_key_value = self.tableWidget_Admin.item(selected_row, 0).text()  # 获取选中行的主键值，假设主键列在第一列
-                # 执行删除操作
+                selected_rows = list(set(item.row() for item in selected_items))  # 获取所有选中的行号
+                primary_key_column = self.tableWidget_Admin.horizontalHeaderItem(0).text()  # 假设主键列在第一列
+                primary_key_values = [self.tableWidget_Admin.item(row, 0).text() for row in selected_rows]  # 获取所有选中行的主键值
+
                 conn = pymysql.Connect(host='localhost', user='root', passwd='110+120+z', database='bookmanage')
                 cursor = conn.cursor()
                 try:
-                    cursor.execute(f"DELETE FROM {table_name} WHERE {self.tableWidget_Admin.horizontalHeaderItem(0).text()} = %s", (primary_key_value,))
+                    for primary_key_value in primary_key_values:
+                        cursor.execute(f"DELETE FROM {table_name} WHERE {primary_key_column} = %s", (primary_key_value,))
                     conn.commit()
                     QMessageBox.information(self, "提示", "删除成功")
-                    if self.searchFlag==1:
+                    if self.searchFlag == 1:
                         self.AdminWindowShow()
-                    elif self.searchFlag==2:
+                    elif self.searchFlag == 2:
                         self.EmployWindowShow()
-                    elif self.searchFlag==3:
+                    elif self.searchFlag == 3:
                         self.CustomerWindowShow()
-                    elif self.searchFlag==4:
+                    elif self.searchFlag == 4:
                         self.BookWindowShow()
-                    
+
                 except Exception as e:
                     conn.rollback()  # 回滚事务
                     QMessageBox.warning(self, "警告", f"删除失败：{str(e)}")
@@ -843,7 +845,8 @@ class MainwindowForm(QMainWindow,Ui_MainWindow):
             else:
                 return
         else:
-            QMessageBox.warning(self, "警告", "请先选择要删除的行")       
+            QMessageBox.warning(self, "警告", "请先选择要删除的行")
+
     def btnDelete_clicked(self):
         print('btnDelete is clicked')
         if self.searchFlag==1:
