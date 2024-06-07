@@ -251,10 +251,11 @@ def insert_data(table_name, data):
 #insert_data('表名', data_to_insert)  # 用实际的表名替换 '表名'
 class MainwindowForm(QMainWindow,Ui_MainWindow):
     # clicked = QtCore.pyqtSignal()
-    def __init__(self):
+    def __init__(self,isAdmin=1):#多传一个状态参数
         super().__init__()
         self.setWindowFlags(Qt.FramelessWindowHint)#隐藏边框
         self.setAttribute(Qt.WA_TranslucentBackground)#透明背景
+        self.isAdmin=isAdmin
         self.setupUi(self)
         #self.setFixedSize(1152,680)
         #槽函数绑定 主要是标签点击切换显示界面
@@ -993,27 +994,30 @@ class MainwindowForm(QMainWindow,Ui_MainWindow):
         print('AdminWindowShow')
         self.searchFlag=1
         print(self.searchFlag)
-        conn = pymysql.Connect(host='localhost',user='root',passwd='110+120+z',database='bookmanage')
-        cursor = conn.cursor()
-        cursor.execute("select * from admin_info")
-        data = cursor.fetchall()
-        self.tableWidget_Admin.setRowCount(len(data))
-        self.tableWidget_Admin.setColumnCount(len(data[0]))  # Assuming the number of columns is the same for all rows
-        column_headers = [description[0] for description in cursor.description]
-        for col_index, header in enumerate(column_headers):
-            header_item = QTableWidgetItem(header)
-            self.tableWidget_Admin.setHorizontalHeaderItem(col_index, header_item)
-        for row_index, row_data in enumerate(data):
-            for col_index, col_data in enumerate(row_data):
-                item = QTableWidgetItem(str(col_data))
-                if col_index == 0:  # 如果是第一列
-                    item.setFlags(item.flags() & ~Qt.ItemIsEditable)  # 设置第一列单元格不可编辑
-                else:
-                    item.setFlags(item.flags() | Qt.ItemIsEditable)  # 设置其他单元格可编辑
-                self.tableWidget_Admin.setItem(row_index, col_index, item)
-        cursor.close()
-        cursor.close()
-        conn.close()
+        if self.isAdmin==1:
+            conn = pymysql.Connect(host='localhost',user='root',passwd='110+120+z',database='bookmanage')
+            cursor = conn.cursor()
+            cursor.execute("select * from admin_info")
+            data = cursor.fetchall()
+            self.tableWidget_Admin.setRowCount(len(data))
+            self.tableWidget_Admin.setColumnCount(len(data[0]))  # Assuming the number of columns is the same for all rows
+            column_headers = [description[0] for description in cursor.description]
+            for col_index, header in enumerate(column_headers):
+                header_item = QTableWidgetItem(header)
+                self.tableWidget_Admin.setHorizontalHeaderItem(col_index, header_item)
+            for row_index, row_data in enumerate(data):
+                for col_index, col_data in enumerate(row_data):
+                    item = QTableWidgetItem(str(col_data))
+                    if col_index == 0:  # 如果是第一列
+                        item.setFlags(item.flags() & ~Qt.ItemIsEditable)  # 设置第一列单元格不可编辑
+                    else:
+                        item.setFlags(item.flags() | Qt.ItemIsEditable)  # 设置其他单元格可编辑
+                    self.tableWidget_Admin.setItem(row_index, col_index, item)
+            cursor.close()
+            cursor.close()
+            conn.close()
+        else:
+            QMessageBox.warning(self, "权限错误", "你不是管理员。无权查看此表")
     def btnInsert_clicked(self):#插入数据
         print('Insert is clicked')
          #TODO:根据flag判断是哪个界面弹出对应的插入窗口

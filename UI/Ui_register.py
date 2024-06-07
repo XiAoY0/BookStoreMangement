@@ -72,6 +72,6 @@ class Ui_Register(object):
         self.lineEdit.setPlaceholderText(_translate("Register", "用户名"))
         self.lineEdit_2.setPlaceholderText(_translate("Register", "密码"))
         self.lineEdit_3.setPlaceholderText(_translate("Register", "再次输入"))
-        self.lineEdit_4.setPlaceholderText(_translate("Register", "联系方式"))
+        self.lineEdit_4.setPlaceholderText(_translate("Register", "性别"))
         self.pushButton.setText(_translate("Register", "注册"))
         self.pushButton_2.setText(_translate("Register", "取消"))

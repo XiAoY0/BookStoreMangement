@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1175</width>
+    <width>1329</width>
     <height>711</height>
    </rect>
   </property>
@@ -17,9 +17,9 @@
    <widget class="QFrame" name="frame">
     <property name="geometry">
      <rect>
-      <x>10</x>
+      <x>0</x>
       <y>0</y>
-      <width>1152</width>
+      <width>1301</width>
       <height>648</height>
      </rect>
     </property>
@@ -218,7 +218,7 @@ QTreeView::branch:open:has-children:has-siblings  {
      </property>
      <property name="geometry">
       <rect>
-       <x>1110</x>
+       <x>1270</x>
        <y>10</y>
        <width>20</width>
        <height>20</height>
@@ -265,10 +265,23 @@ background:#FF0000;
        <x>30</x>
        <y>20</y>
        <width>137</width>
-       <height>611</height>
+       <height>621</height>
       </rect>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <widget class="QLabel" name="label_8">
+        <property name="styleSheet">
+         <string notr="true">
+QLabel::hover{
+	color: rgb(255, 102, 148);
+}</string>
+        </property>
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:16pt;&quot;&gt;管理员界面&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+      </item>
       <item>
        <widget class="QLabel" name="label_13">
         <property name="styleSheet">
@@ -342,7 +355,7 @@ QLabel::hover{
       <rect>
        <x>180</x>
        <y>80</y>
-       <width>901</width>
+       <width>1101</width>
        <height>551</height>
       </rect>
      </property>
@@ -353,13 +366,20 @@ QLabel::hover{
     <widget class="QWidget" name="horizontalLayoutWidget">
      <property name="geometry">
       <rect>
-       <x>660</x>
-       <y>19</y>
-       <width>411</width>
+       <x>720</x>
+       <y>20</y>
+       <width>541</width>
        <height>51</height>
       </rect>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QPushButton" name="pushButton_6">
+        <property name="text">
+         <string>保存修改</string>
+        </property>
+       </widget>
+      </item>
       <item>
        <widget class="QPushButton" name="pushButton_3">
         <property name="text">
@@ -423,7 +443,7 @@ QLabel::hover{
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1175</width>
+     <width>1329</width>
      <height>26</height>
     </rect>
    </property>
