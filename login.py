@@ -9,6 +9,7 @@ from UI.Ui_Login import Ui_Login
 from UI.Ui_register import Ui_Register
 from UI.Ui_forget_widget import Ui_forget_widget
 from mainwindow import *
+from costumer import *
 import pymysql
 
 #主登录界面 最开始显示的窗口 其余的登陆界面 在按钮点击后被显示
@@ -38,19 +39,27 @@ class loginForm(QDialog, Ui_Login):
             cursor.execute('SELECT * FROM admin_info WHERE ad_id=%s AND ad_password=%s', (username, password))
             admin_result = cursor.fetchone()
 
+            # 查询会员表
+            cursor.execute('SELECT * FROM 会员 WHERE 会员编号=%s AND 会员联系方式=%s', (username, password))
+            customer_result = cursor.fetchone()
+
             if member_result:
                 QMessageBox.information(self, '登录结果', '员工登录成功')
                 self.window_E = MainwindowForm(isAdmin=0)
                 self.window_E.show()
                 self.window_E.raise_()
                 self.hide()
-                #TODO:修改函数 使得传入一个状态参数显示员工或管理员 修改mainwindow.py中的若干函数，不向员工提供部分函数的访问
             elif admin_result:
                 self.window = MainwindowForm()
                 self.window.show()
                 self.window.raise_()
                 self.hide()
                 QMessageBox.information(self, '登录结果', '管理员登录成功')
+            elif customer_result:
+                self.window = Customer(username)
+                self.window.show()
+                self.window.raise_()
+                self.hide()
             else:
                 QMessageBox.warning(self, '登录结果', '用户名或密码错误')
         finally:
