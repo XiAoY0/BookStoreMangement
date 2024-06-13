@@ -66,16 +66,20 @@ class Customer(QMainWindow,Ui_MainWindow_Customer):
                 cursor.execute("SELECT 员工编号, 员工姓名 FROM 工作人员")
                 employees = cursor.fetchall()
                 employee_dict = {f"{employee[1]} ({employee[0]})": employee[0] for employee in employees}
-                
                 if not employee_dict:
                     raise Exception("无可用员工办理。")
-
                 items = list(employee_dict.keys())
                 item, ok = QInputDialog.getItem(self, "选择办理人", "请选择办理人:", items, 0, False)
                 if not ok or not item:
                     raise Exception("未选择办理人。")
-
                 employee_id = employee_dict[item]
+
+                # 查询会员信息
+                cursor.execute("SELECT 会员联系方式, 会员姓名, 会员类别 FROM 会员 WHERE 会员编号 = %s", (self.username,))
+                member_info = cursor.fetchone()
+                if not member_info:
+                    raise Exception("会员信息未找到。")
+                member_contact, member_name, member_category = member_info
 
                 # 遍历表格行
                 for row in range(self.tableWidget_Admin.rowCount()):
@@ -85,33 +89,51 @@ class Customer(QMainWindow,Ui_MainWindow_Customer):
 
                         book_id_col = headers.index('图书编号')
                         book_name_col = headers.index('图书名称')
-                        return_id_col = headers.index('退书编号')  # Assuming there is a return ID to identify the return record
-                        quantity_col = headers.index('数量')
+                        #unit_price_col = headers.index('图书价格')
+                        #quantity_col = headers.index('数量')
 
                         book_id = self.tableWidget_Admin.item(row, book_id_col).text()
                         book_name = self.tableWidget_Admin.item(row, book_name_col).text()
-                        return_id = self.tableWidget_Admin.item(row, return_id_col).text()
-                        quantity = int(self.tableWidget_Admin.item(row, quantity_col).text())  # 获取退还数量
+                        #quantity = int(self.tableWidget_Admin.item(row, quantity_col).text())
 
-                        # 删除退书记录
-                        cursor.execute("DELETE FROM 退书记录 WHERE 退书编号 = %s", (return_id,))
+                        # 检查购买记录是否存在
+                        cursor.execute("SELECT 购买记录编号 FROM 购买记录 WHERE 会员编号 = %s AND 图书编号 = %s", (self.username, book_id))
+                        purchase_record = cursor.fetchone()
+                        if not purchase_record:
+                            raise Exception(f"没有找到图书 '{book_name}' 的购买记录。")
+                        purchase_record_id = purchase_record[0]
+
+                        # 删除购买记录
+                        cursor.execute("DELETE FROM 购买记录 WHERE 购买记录编号 = %s", (purchase_record_id,))
+
+                        # 增加退书记录
+                        cursor.execute("""
+                            INSERT INTO 退书记录 (退款时间, 会员编号, 会员联系方式, 会员姓名, 图书编号, 图书名称, 办理人)
+                            VALUES (NOW(), %s, %s, %s, %s, %s, %s)
+                        """, (self.username, member_contact, member_name, book_id, book_name, employee_id))
 
                         # 更新库存数量
+                        cursor.execute("SELECT 图书库存数量 FROM 图书 WHERE 图书编号 = %s", (book_id,))
+                        current_stock = cursor.fetchone()
+                        if not current_stock:
+                            raise Exception(f"没有找到图书 '{book_name}' 的库存信息。")
+                        new_stock = current_stock[0] + 1
+
                         cursor.execute("""
                             UPDATE 图书
-                            SET 图书库存数量 = 图书库存数量 + %s
+                            SET 图书库存数量 = %s
                             WHERE 图书编号 = %s
-                        """, (quantity, book_id))
+                        """, (new_stock, book_id))
 
                 # 提交事务
                 conn.commit()
 
             # 显示退书成功信息
-            QMessageBox.information(self, "提示", "退书成功！")
-
+            QMessageBox.information(self, "提示", f"退书成功！办理人：{item}")
+            self.History()
         except Exception as e:
             # 提示出现错误
-            QMessageBox.critical(self, "错误", f"退书时发生错误: {str(e)}")        
+            QMessageBox.critical(self, "错误", f"退书时发生错误: {str(e)}")   
     def Pay(self):
         print("pay the book")
         try:
